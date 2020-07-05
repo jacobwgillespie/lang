@@ -78,6 +78,145 @@ b :: 123
 let x = "x"
 ```
 
+## Labels
+
+Values can be labeled via a binding tuple:
+
+```coffeescript
+let a = 123
+let b = 456
+let c = 789
+
+let hello = a
+println(hello) #=> prints 123
+```
+
+Labels can be comprised of any string value, but only well-named labels can be referred to using the "bare" syntax. Well-named labels begin with a letter and are followed by zero or more letters, numbers, or underscores. All other labels use the following syntax:
+
+```coffeescript
+let :"a" = 123
+let :"b" = 456
+let :"c" = 789
+
+let :"hello" = :"a"
+print(hello)   #=> prints 123
+print(:hello)  #=> prints 123
+```
+
+Additionally, well-named labels can omit the quotes when using symbol syntax:
+
+```coffeescript
+let :a = 123
+let :b = 456
+let :c = 789
+
+let :hello = :a
+print(hello)   #=> prints 123
+print(:hello)  #=> prints 123
+```
+
+### Label Literal
+
+As demonstrated above, labels outside of the label binding position are resolved into values. To instead refer to a label value literally, the label can be extracted using a named placeholder:
+
+```coffeescript
+let a    = 123
+let :b   = 456
+let :"c" = 789
+
+# Extracts the label of its input and moves it to the value position of its binding
+let labelOf = ?Label :: _ -> ?Label
+
+labelOf(a) #=> _ :: _ = :a
+labelOf(b) #=> _ :: _ = :c
+labelOf(c) #=> _ :: _ = :c
+
+# Labelling the label :)
+let labelOf = ?Label :: _ -> label = ?Label
+
+labelOf(a) #=> label :: _ = :a
+```
+
+Since it may be commonly desirable to refer to a label by its literal, a short syntax is available using `::name`:
+
+```coffeescript
+let a = 123
+
+println(a)     #=> prints 123
+println(:a)    #=> prints 123
+println(::a)   #=> prints :a
+println(::"a") #=> prints :a
+```
+
+It is also possible to convert a label literal back into a reference, again using named placeholders:
+
+```coffeescript
+let valueOf = (_ :: Label = ?label) -> (?label :: _ = _)
+
+let a = 123
+
+println(a)            #=> prints 123
+println(valueOf(::a)) #=> prints 123
+println(valueOf(a))   #=> ERROR
+```
+
+Since it is less common to resolve a symbol literal in the current scope, there is no short syntax for this operation.
+
+### Label Rebinding
+
+When binding labels to values, the binding will overwrite any previous label the value held:
+
+```coffeescript
+let a = 123
+let b = a
+
+labelOf(b) #=> :b
+```
+
+It is possible to preserve the label of a value using a named placeholder:
+
+```coffeescript
+let a = 123
+
+# Let-binding a named placeholder
+let ?b = a
+labelOf(?b) #=> :a
+
+# Using a new label
+let double = x -> x * 2
+labelOf(double(a)) #=> :x
+
+# Using a named placeholder
+let double = ?x -> ?x * 2
+labelOf(double(a)) #=> :a
+```
+
+### Let
+
+The `let` keyword takes a labelled type binding and exposes that label in the current scope, allowing the binding to be referred to by the label.
+
+With specified types:
+
+```coffeescript
+let a :: Bool    = true
+let b :: Int     = 123
+let c :: Double  = 1.23
+let d :: String  = "hello"
+let e :: Regex   = /[0-9]+/
+let f :: Unit    = ()
+```
+
+Without specified types (inference):
+
+```coffeescript
+let a = true
+let b = 123
+let c = 1.23
+let d = "hello"
+let e = /[0-9]+/
+let f = ()
+```
+
 ## Placeholder
 
 A placeholder represents a value, type, or label that the programmer has not specified that will either be resolved later by the compiler, type inference, or runtime, or which is not important to the program.
@@ -104,134 +243,6 @@ Named placeholders differ from anonymous placeholders in that they create a labe
 ```coffeescript
 # typeOf takes any value and returns that value's type
 let typeOf = (_ :: ?Type) -> ?Type
-```
-
-## Labels
-
-Labels can be referenced using the following syntax:
-
-```coffeescript
-:'a'
-:'b'
-:'label'
-```
-
-Labels can be comprised of any string value, but only "well-named" labels can be referred to without the full `:''` syntax. These labels begin with a lower-case letter and are followed by zero or more letters, numbers, or underscores:
-
-```
-a
-b
-label
-label123
-label_example
-labelExample
-```
-
-Additionally, well-named labels may omit the single quotes when using label literal syntax:
-
-```
-:a
-:b
-:label
-```
-
-A label can be applied to a value with `=`:
-
-```coffeescript
-a             = 123
-b             = 456
-label         = 789
-:'an example' = 0
-```
-
-Labels can be extracted from bindings with a named placeholder in the label position:
-
-```coffeescript
-let a             = 123
-let b             = 456
-let label         = 789
-let :'an example' = 0
-
-let labelOf = ?Label :: _ -> ?Label
-
-labelOf(b)             #=> :b
-labelOf(:'an example') #=> :'an example'
-
-println(label)         #=> prints 789
-println(:'an example') #=> prints 0
-```
-
-### Label Binding
-
-When binding labels to values, the binding will overwrite any previous label the value held:
-
-```coffeescript
-let a = 123
-let b = a
-
-labelOf(b) #=> :b
-```
-
-It is possible to preserve the label of a value using a named placeholder:
-
-```coffeescript
-let a = 123
-
-# Let-binding a named placeholder
-let ?b = a
-labelOf(b) #=> :a
-
-# Using a new label
-let double = x -> x * 2
-labelOf(double(a)) #=> :x
-
-# Using a named placeholder
-let double = ?x -> ?x * 2
-labelOf(double(a)) #=> :a
-```
-
-### Let
-
-The `let` keyword takes a labelled type binding and creates a reference to that label in the current scope, allowing the binding to be referred to by that label.
-
-With specified types:
-
-```coffeescript
-let a :: Bool    = true
-let b :: Int     = 123
-let c :: Double  = 1.23
-let d :: String  = "hello"
-let e :: Regex   = /[0-9]+/
-let f :: Unit    = ()
-```
-
-Without specified types (inference):
-
-```coffeescript
-let a = true
-let b = 123
-let c = 1.23
-let d = "hello"
-let e = /[0-9]+/
-let f = ()
-```
-
-## Identifiers
-
-Identifiers are labels referred to by name, without the `:` prefix or `:''` syntax:
-
-```coffeescript
-# Value bindings
-a
-b
-c
-thing
-
-# Type bindings
-A
-B
-C
-Thing
 ```
 
 ## Sets
@@ -495,4 +506,4 @@ let hihi = double("hi")
 
 ## Modules
 
-Modules provide a mechanism for 
+Modules provide a mechanism for
