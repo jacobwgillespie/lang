@@ -1,0 +1,65 @@
+def hello (
+  | (name)           => "Hello, ${name}"
+  | (name, greeting) => "${greeting}, ${name}"
+  | (first, last)    => {
+      def name "${first} ${last}"
+      "Hello, ${name}"
+    }
+)
+
+type Country ("US" | "UK")
+type Person (
+  first   :: String
+  last    :: String
+  age     :: Int
+  address :: (
+    country :: Country
+  )
+)
+
+type Extract (t :: Type, _ :: String) => t(key)
+type Address = Extract(Person, "address")
+
+def printAddress (
+  (address :: Address) => println("Country: ${address.country}")
+)
+
+def swapCountry (
+  | (t :: (address :: (country :: "US"))) => t.address.country = "UK"
+  | (t :: (address :: (country :: "UK"))) => t.address.country = "US"
+)
+
+def jacob = swapCountry(
+  first = "Jacob"
+  last = "Gillespie"
+  age = 28
+  address = (
+    country = "US"
+  )
+)
+
+printAddress jacob.address
+
+###############
+## Desugared ##
+###############
+
+def printAddress (
+  ((_ :: "address" as address): Address) => println("Country: ${address.country}")
+)
+
+def swapCountry (
+  (_ :: ((_ :: "address" as address): ((_ :: "country" as country): "US")) as t) => t.address.country = "UK"
+  (_ :: ((_ :: "address" as address): ((_ :: "country" as country): "UK")) as t) => t.address.country = "US"
+)
+
+def jacob = swapCountry (
+  (_ :: "name") => "Jacob"
+  (_ :: "last") => "Gillespie"
+  (_ :: "age") => 28
+  (_ :: "address") => (
+    (_ :: "country") => "US"
+  )
+)
+
+printAddress (jacob.address) # => "Hello, Jacob Gillespie"

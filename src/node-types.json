@@ -1,0 +1,1233 @@
+[
+  {
+    "type": "application",
+    "named": true,
+    "fields": {
+      "identifier": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "param": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "application",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matchExpression",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryExpression",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "binding",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "application",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matchExpression",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryExpression",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "boolLiteral",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "interpreted_string_literal",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "lambda",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "application",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matchExpression",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryExpression",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "lambdaType",
+    "named": true,
+    "fields": {
+      "from": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "to": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "listType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "anything",
+          "named": true
+        },
+        {
+          "type": "boolLiteral",
+          "named": true
+        },
+        {
+          "type": "boolType",
+          "named": true
+        },
+        {
+          "type": "interpreted_string_literal",
+          "named": true
+        },
+        {
+          "type": "lambdaType",
+          "named": true
+        },
+        {
+          "type": "listType",
+          "named": true
+        },
+        {
+          "type": "numberLiteral",
+          "named": true
+        },
+        {
+          "type": "numberType",
+          "named": true
+        },
+        {
+          "type": "raw_string_literal",
+          "named": true
+        },
+        {
+          "type": "ternaryType",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        },
+        {
+          "type": "typeApplication",
+          "named": true
+        },
+        {
+          "type": "typeIdentifier",
+          "named": true
+        },
+        {
+          "type": "unitLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "matchClause",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "lambda",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "matchExpression",
+    "named": true,
+    "fields": {
+      "candidate": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "matchClause",
+            "named": true
+          }
+        ]
+      },
+      "parameters": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "tupleType",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "sourceFile",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "binding",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "ternaryExpression",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "application",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matchExpression",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryExpression",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "valueIfFalse": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "application",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matchExpression",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryExpression",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "valueIfTrue": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "application",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambda",
+            "named": true
+          },
+          {
+            "type": "matchExpression",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryExpression",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "ternaryType",
+    "named": true,
+    "fields": {
+      "condition": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "typeConditional",
+            "named": true
+          }
+        ]
+      },
+      "valueIfFalse": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "valueIfTrue": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "tupleElement",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "tupleType",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "tupleElement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typeApplication",
+    "named": true,
+    "fields": {
+      "identifier": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "typeIdentifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "typeConditional",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "anything",
+          "named": true
+        },
+        {
+          "type": "boolLiteral",
+          "named": true
+        },
+        {
+          "type": "boolType",
+          "named": true
+        },
+        {
+          "type": "interpreted_string_literal",
+          "named": true
+        },
+        {
+          "type": "lambdaType",
+          "named": true
+        },
+        {
+          "type": "listType",
+          "named": true
+        },
+        {
+          "type": "numberLiteral",
+          "named": true
+        },
+        {
+          "type": "numberType",
+          "named": true
+        },
+        {
+          "type": "raw_string_literal",
+          "named": true
+        },
+        {
+          "type": "ternaryType",
+          "named": true
+        },
+        {
+          "type": "tupleType",
+          "named": true
+        },
+        {
+          "type": "typeApplication",
+          "named": true
+        },
+        {
+          "type": "typeIdentifier",
+          "named": true
+        },
+        {
+          "type": "unitLiteral",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "typeParameter",
+    "named": true,
+    "fields": {
+      "constraint": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "anything",
+            "named": true
+          },
+          {
+            "type": "boolLiteral",
+            "named": true
+          },
+          {
+            "type": "boolType",
+            "named": true
+          },
+          {
+            "type": "interpreted_string_literal",
+            "named": true
+          },
+          {
+            "type": "lambdaType",
+            "named": true
+          },
+          {
+            "type": "listType",
+            "named": true
+          },
+          {
+            "type": "numberLiteral",
+            "named": true
+          },
+          {
+            "type": "numberType",
+            "named": true
+          },
+          {
+            "type": "raw_string_literal",
+            "named": true
+          },
+          {
+            "type": "ternaryType",
+            "named": true
+          },
+          {
+            "type": "tupleType",
+            "named": true
+          },
+          {
+            "type": "typeApplication",
+            "named": true
+          },
+          {
+            "type": "typeIdentifier",
+            "named": true
+          },
+          {
+            "type": "unitLiteral",
+            "named": true
+          }
+        ]
+      },
+      "identifier": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "typeIdentifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": ":",
+    "named": false
+  },
+  {
+    "type": "<",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "=>",
+    "named": false
+  },
+  {
+    "type": ">",
+    "named": false
+  },
+  {
+    "type": "?",
+    "named": false
+  },
+  {
+    "type": "[]",
+    "named": false
+  },
+  {
+    "type": "anything",
+    "named": true
+  },
+  {
+    "type": "boolType",
+    "named": true
+  },
+  {
+    "type": "escape_sequence",
+    "named": true
+  },
+  {
+    "type": "extends",
+    "named": false
+  },
+  {
+    "type": "false",
+    "named": false
+  },
+  {
+    "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "let",
+    "named": false
+  },
+  {
+    "type": "match",
+    "named": false
+  },
+  {
+    "type": "numberLiteral",
+    "named": true
+  },
+  {
+    "type": "numberType",
+    "named": true
+  },
+  {
+    "type": "raw_string_literal",
+    "named": true
+  },
+  {
+    "type": "true",
+    "named": false
+  },
+  {
+    "type": "typeIdentifier",
+    "named": true
+  },
+  {
+    "type": "unitLiteral",
+    "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
+  }
+]
