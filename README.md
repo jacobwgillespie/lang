@@ -234,6 +234,9 @@ let _ = 123
 
 # fn is a function that takes a String and always returns 123
 let fn = (_ :: String) -> 123
+
+# fn is a function that takes a variable of an unknown type and returns 321
+let fn = (x :: _) -> 321
 ```
 
 ### Named Placeholders
@@ -243,6 +246,9 @@ Named placeholders differ from anonymous placeholders in that they create a labe
 ```coffeescript
 # typeOf takes any value and returns that value's type
 let typeOf = (_ :: ?Type) -> ?Type
+
+# labelOf takes any value and returns that value's label
+let valueOf = (?label :: _) -> ?label
 ```
 
 ## Sets
