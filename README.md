@@ -2,7 +2,7 @@
 
 ## Binding Tuple
 
-A binding tuple represents a 3-tuple of label, type, and value. Any of the three elements may be missing, represented by a `_` anonymous placeholder or `?name` named placeholder. The binding can be read as "label has type X and value x", where the value `x` is a member of the set of all `X` values.
+A binding tuple represents a 3-tuple of label, type, and value. Any of the three elements may be missing, represented by a `_` anonymous placeholder or `?name` named placeholder. The binding can be read as 'label has type X and value x', where the value `x` is a member of the set of all `X` values.
 
 Bare type:
 
@@ -71,11 +71,11 @@ Type names start with an upper case letter, no other identifier may start with a
 Literal values can appear in type specifiers:
 
 ```coffeescript
-a :: "value"
+a :: 'value'
 b :: 123
 
-# inferred as the literal string type "x"
-let x = "x"
+# inferred as the literal string type 'x'
+let x = 'x'
 ```
 
 ## Labels
@@ -91,14 +91,14 @@ let hello = a
 println(hello) #=> prints 123
 ```
 
-Labels can be comprised of any string value, but only well-named labels can be referred to using the "bare" syntax. Well-named labels begin with a letter and are followed by zero or more letters, numbers, or underscores. All other labels use the following syntax:
+Labels can be comprised of any string value, but only well-named labels can be referred to using the 'bare' syntax. Well-named labels begin with a letter and are followed by zero or more letters, numbers, or underscores. All other labels use the following syntax:
 
 ```coffeescript
-let :"a" = 123
-let :"b" = 456
-let :"c" = 789
+let :'a' = 123
+let :'b' = 456
+let :'c' = 789
 
-let :"hello" = :"a"
+let :'hello' = :'a'
 print(hello)   #=> prints 123
 print(:hello)  #=> prints 123
 ```
@@ -122,7 +122,7 @@ As demonstrated above, labels outside of the label binding position are resolved
 ```coffeescript
 let a    = 123
 let :b   = 456
-let :"c" = 789
+let :'c' = 789
 
 # Extracts the label of its input and moves it to the value position of its binding
 let labelOf = ?Label :: _ -> ?Label
@@ -145,7 +145,7 @@ let a = 123
 println(a)     #=> prints 123
 println(:a)    #=> prints 123
 println(::a)   #=> prints :a
-println(::"a") #=> prints :a
+println(::'a') #=> prints :a
 ```
 
 It is also possible to convert a label literal back into a reference, again using named placeholders:
@@ -201,7 +201,7 @@ With specified types:
 let a :: Bool    = true
 let b :: Int     = 123
 let c :: Double  = 1.23
-let d :: String  = "hello"
+let d :: String  = 'hello'
 let e :: Regex   = /[0-9]+/
 let f :: Unit    = ()
 ```
@@ -212,7 +212,7 @@ Without specified types (inference):
 let a = true
 let b = 123
 let c = 1.23
-let d = "hello"
+let d = 'hello'
 let e = /[0-9]+/
 let f = ()
 ```
@@ -277,22 +277,22 @@ Without a type signature:
 
 ```coffeescript
 let jacob = (
-  first = "Jacob"
-  last  = "Gillespie"
+  first = 'Jacob'
+  last  = 'Gillespie'
   age   = 28
 )
 
 # Desugared
 let jacob = (
-  first :: _ = "Jacob"
-  last  :: _ = "Gillespie"
+  first :: _ = 'Jacob'
+  last  :: _ = 'Gillespie'
   age   :: _ = 28
 )
 
 # After type inference:
 let jacob = (
-  first :: "Jacob"     = "Jacob"
-  last  :: "Gillespie" = "Gillespie"
+  first :: 'Jacob'     = 'Jacob'
+  last  :: 'Gillespie' = 'Gillespie'
   age   :: 28          = 28
 )
 ```
@@ -307,8 +307,8 @@ let Person = (
 )
 
 let jacob :: Person = (
-  first :: String = "Jacob"
-  last  :: String = "Gillespie"
+  first :: String = 'Jacob'
+  last  :: String = 'Gillespie'
   age   :: Int    = 28
 )
 ```
@@ -349,29 +349,29 @@ Type unions represent a type that can be either type A or type B:
 ```coffeescript
 A | B
 
-let Country = "US" | "UK"
-let example :: Country = "US"
+let Country = 'US' | 'UK'
+let example :: Country = 'US'
 
-let Day = "Monday"
-| "Tuesday"
-| "Wednesday"
-| "Thursday"
-| "Friday"
-| "Saturday"
-| "Sunday"
+let Day = 'Monday'
+| 'Tuesday'
+| 'Wednesday'
+| 'Thursday'
+| 'Friday'
+| 'Saturday'
+| 'Sunday'
 ```
 
 For visual convenience, the first member can be preceded by a vertical bar when defining a type binding:
 
 ```coffeescript
 let Day =
-  | "Monday"
-  | "Tuesday"
-  | "Wednesday"
-  | "Thursday"
-  | "Friday"
-  | "Saturday"
-  | "Sunday"
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday'
 ```
 
 ### Optional
@@ -398,13 +398,13 @@ A & B
 If given a set of values, set selection extracts values that pattern-match a specified predicate:
 
 ```coffeescript
-let person = (first = "Jacob", last = "Gillespie", age = 28)
+let person = (first = 'Jacob', last = 'Gillespie', age = 28)
 
-person(:first) #=> first :: "Jacob" = "Jacob"
+person(:first) #=> first :: 'Jacob' = 'Jacob'
 person(28)     #=> age   :: 28      = 28
 
 let key = :last
-person(key) #=> last :: "Gillespie" = "Gillespie"
+person(key) #=> last :: 'Gillespie' = 'Gillespie'
 ```
 
 Since accessing set values by their label is common, the `set.label` syntax exists as shorthand:
@@ -477,15 +477,15 @@ x -> x
 
 Note that the right-hand side represents the value position of a type binding.
 
-Since a function's input value can be a set, application can behave like "keyword arguments" in other languages:
+Since a function's input value can be a set, application can behave like 'keyword arguments' in other languages:
 
 ```coffeescript
 let greet = (name :: String, greeting :: String) -> {
-  "#{greeting}, #{name}"
+  '#{greeting}, #{name}'
 }
 
-greet(greeting = "Hola", name = "Jacob")
-#=> "Hola, Jacob"
+greet(greeting = 'Hola', name = 'Jacob')
+#=> 'Hola, Jacob'
 ```
 
 ### Function Application
@@ -503,13 +503,61 @@ Function application mirrors set selection by first finding a function in the se
 ```coffeescript
 let double = (
   (x: Int)    -> x * 2
-  (x: String) -> "${x}${x}"
+  (x: String) -> '${x}${x}'
 )
 
 let four = double(2)
-let hihi = double("hi")
+let hihi = double('hi')
 ```
+
+## Control Flow
+
+### if/else
+
+Conditionals can be represented by `if`/ `else`:
+
+```coffeescript
+if a == b true else false
+
+if a == b {
+  true
+} else {
+  false
+}
+
+if a == b {
+  true
+}
+```
+
+Pattern matching is preferred to if statements:
+
+```coffeescript
+let today = 'friday'
+
+let dayType = (
+  (_ :: 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday') -> 'week day'
+  (_ :: 'friday' | 'saturday') -> 'weekend'
+)(today)
+```
+
+### loops
 
 ## Modules
 
-Modules provide a mechanism for
+Modules provide a mechanism for organising and packaging functions and types. Modules can be imported by file path:
+
+```coffeescript
+import strings from './strings.lang'
+
+let goodbye = strings.replace('hello', pattern = /hello/, replacement = 'goodbye')
+```
+
+Symbols can be exported from a given file, to be imported into another:
+
+```coffeescript
+let hello = 'hello'
+let goodbye = 'goodbye'
+
+export(hello, goodbye)
+```
