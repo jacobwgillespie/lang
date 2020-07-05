@@ -1,5 +1,58 @@
 # Spec
 
+## Binding Tuple
+
+A binding tuple represents a 3-tuple of label, type, and value. Any of the three elements may be missing, represented by a `_` anonymous placeholder or `?name` named placeholder. The binding can be read as "label has type X and value x", where the value `x` is a member of the set of all `X` values.
+
+Bare type:
+
+```coffeescript
+Bool
+
+# Desugared
+_ :: Bool = _
+```
+
+Labelled type:
+
+```coffeescript
+a :: Bool
+
+# Desugared
+a :: Bool = _
+```
+
+Labelled value:
+
+```coffeescript
+a = true
+
+# Desugared
+a :: _ = true
+
+# After type inference
+a :: true = true
+```
+
+With named placeholders:
+
+```coffeescript
+# A binding with an unknown label, Bool type, and true value
+?label :: Bool = true
+
+# A binding with a label, unknown type, and unknown value
+a :: ?Type = ?value
+
+# A binding with a label and known type, but unknown value
+a :: Bool = ?value
+```
+
+Full type binding:
+
+```coffeescript
+a :: Bool = true
+```
+
 ## Basic Types
 
 Type names start with an upper case letter, no other identifier may start with an upper case letter.
@@ -13,64 +66,137 @@ Type names start with an upper case letter, no other identifier may start with a
 | `Regex`  | Regular expressions           |
 | `Unit`   | None (the empty set)          |
 
-## Type Binding
+## Literal Type
 
-A type binding represents a 3-tuple of label, type, and value. Any of the three elements may be missing using a "hole", represented by `_`. The type binding can be read as "label has type X and value x", where the value `x` is a member of the set of all `X` values.
+Literal values can appear in type specifiers:
 
-Bare type:
+```coffeescript
+a :: "value"
+b :: 123
 
-```coffee
-Bool
-
-# Desugared
-_ :: Bool = _
+# inferred as the literal string type "x"
+let x = "x"
 ```
 
-Labelled type:
+## Placeholder
 
-```coffee
-a :: Bool
+A placeholder represents a value, type, or label that the programmer has not specified that will either be resolved later by the compiler, type inference, or runtime, or which is not important to the program.
 
-# Desugared
-a :: Bool = _
+### Anonymous Placeholder
+
+The anonymous placeholder is represented by a single `_`, which represents a placeholder which will not be accessible as a named entity at any future point, i.e. the programmer does not care what the placeholder resolves to.
+
+```coffeescript
+# a is a binding with any value
+let a = _
+
+# 123 is bound to the anonymous placeholder, and will not be accessible later any name
+let _ = 123
+
+# fn is a function that takes a String and always returns 123
+let fn = (_ :: String) -> 123
 ```
 
-Labelled value:
+### Named Placeholders
 
-```coffee
-a = true
+Named placeholders differ from anonymous placeholders in that they create a label that can be used to reference the placeholder later in the scope. Named placeholders begin with a question mark `?` followed by the placeholder name:
 
-# Desugared
-a :: _ = true
-
-# After type inference
-a :: true = true
+```coffeescript
+# typeOf takes any value and returns that value's type
+let typeOf = (_ :: ?Type) -> ?Type
 ```
 
-Full type binding:
+## Labels
 
-```coffee
-a :: Bool = true
+Labels can be referenced using the following syntax:
+
+```coffeescript
+:'a'
+:'b'
+:'label'
 ```
 
-## Literal Label
+Labels can be comprised of any string value, but only "well-named" labels can be referred to without the full `:''` syntax. These labels begin with a lower-case letter and are followed by zero or more letters, numbers, or underscores:
 
-To refer to a label by its literal name, rather than resolving its type of value, its name is followed by a colon suffix:
+```
+a
+b
+label
+label123
+label_example
+labelExample
+```
 
-```coffee
+Additionally, well-named labels may omit the single quotes when using label literal syntax:
+
+```
+:a
+:b
+:label
+```
+
+A label can be applied to a value with `=`:
+
+```coffeescript
+a             = 123
+b             = 456
+label         = 789
+:'an example' = 0
+```
+
+Labels can be extracted from bindings with a named placeholder in the label position:
+
+```coffeescript
+let a             = 123
+let b             = 456
+let label         = 789
+let :'an example' = 0
+
+let labelOf = ?Label :: _ -> ?Label
+
+labelOf(b)             #=> :b
+labelOf(:'an example') #=> :'an example'
+
+println(label)         #=> prints 789
+println(:'an example') #=> prints 0
+```
+
+### Label Binding
+
+When binding labels to values, the binding will overwrite any previous label the value held:
+
+```coffeescript
+let a = 123
+let b = a
+
+labelOf(b) #=> :b
+```
+
+It is possible to preserve the label of a value using a named placeholder:
+
+```coffeescript
 let a = 123
 
-a  # => 123
-a: # => a :: _ = _
+# Let-binding a named placeholder
+let ?b = a
+labelOf(b) #=> :a
+
+# Using a new label
+let double = x -> x * 2
+labelOf(double(a)) #=> :x
+
+# Using a named placeholder
+let double = ?x -> ?x * 2
+labelOf(double(a)) #=> :a
 ```
 
-## Let
+### Let
 
 The `let` keyword takes a labelled type binding and creates a reference to that label in the current scope, allowing the binding to be referred to by that label.
 
 With specified types:
 
-```coffee
+```coffeescript
 let a :: Bool    = true
 let b :: Int     = 123
 let c :: Double  = 1.23
@@ -81,7 +207,7 @@ let f :: Unit    = ()
 
 Without specified types (inference):
 
-```coffee
+```coffeescript
 let a = true
 let b = 123
 let c = 1.23
@@ -90,23 +216,29 @@ let e = /[0-9]+/
 let f = ()
 ```
 
-## Literals
+## Identifiers
 
-Literal values can appear in type specifiers:
+Identifiers are labels referred to by name, without the `:` prefix or `:''` syntax:
 
-```coffee
-a :: "value"
-b :: 123
+```coffeescript
+# Value bindings
+a
+b
+c
+thing
 
-# inferred as the literal string type "x"
-let x = "x"
+# Type bindings
+A
+B
+C
+Thing
 ```
 
 ## Sets
 
 Sets represent a collection of type bindings and are represented using parentheses:
 
-```coffee
+```coffeescript
 # Set of an integer and a double
 (Int, Double)
 
@@ -120,13 +252,13 @@ Sets represent a collection of type bindings and are represented using parenthes
 (a :: Int, b :: Int)
 ```
 
-## Records
+### Records
 
 Concepts like records can be represented using sets of labelled values. Keys are order-independent.
 
 Without a type signature:
 
-```coffee
+```coffeescript
 let jacob = (
   first = "Jacob"
   last  = "Gillespie"
@@ -150,7 +282,7 @@ let jacob = (
 
 With type signatures:
 
-```coffee
+```coffeescript
 let Person = (
   first :: String
   last  :: String
@@ -168,7 +300,7 @@ let jacob :: Person = (
 
 Tuples are ordered sets of type bindings and are represented using square brackets:
 
-```coffee
+```coffeescript
 # An integer followed by a double
 [Int, Double]
 
@@ -178,7 +310,7 @@ Tuples are ordered sets of type bindings and are represented using square bracke
 
 Tuples can also have variable length. This can represent traditional concepts like arrays, or more advanced structures.
 
-```coffee
+```coffeescript
 # A list of zero or more integers
 [...Int]
 
@@ -186,11 +318,18 @@ Tuples can also have variable length. This can represent traditional concepts li
 [String, ...Int]
 ```
 
-## Type Union
+Tuples can contain labelled values:
+
+```coffeescript
+# A string labelled :first followed by a string labelled :last
+[first :: String, last :: String]
+```
+
+## Union Type
 
 Type unions represent a type that can be either type A or type B:
 
-```coffee
+```coffeescript
 A | B
 
 let Country = "US" | "UK"
@@ -207,7 +346,7 @@ let Day = "Monday"
 
 For visual convenience, the first member can be preceded by a vertical bar when defining a type binding:
 
-```coffee
+```coffeescript
 let Day =
   | "Monday"
   | "Tuesday"
@@ -218,39 +357,42 @@ let Day =
   | "Sunday"
 ```
 
-## Type Intersection
-
-Type intersections represent a type that must be both A and B:
-
-```coffee
-A & B
-```
-
-## Optional Type
+### Optional
 
 Optional types can be represented as the union of a type and the unit type. A convenience `?` syntax exists for expressing this union:
 
-```coffee
+```coffeescript
 String?
 
 # Desugared
 (String | ())
 ```
 
+## Intersection Type
+
+Type intersections represent a type that must be both A and B:
+
+```coffeescript
+A & B
+```
+
 ## Set Selection
 
 If given a set of values, set selection extracts values that pattern-match a specified predicate:
 
-```coffee
-let person = (name = "Jacob", age = 28)
+```coffeescript
+let person = (first = "Jacob", last = "Gillespie", age = 28)
 
-person(name:) # => name :: "Jacob" = "Jacob"
-person(28)    # => age  :: 28      = 28
+person(:first) #=> first :: "Jacob" = "Jacob"
+person(28)     #=> age   :: 28      = 28
+
+let key = :last
+person(key) #=> last :: "Gillespie" = "Gillespie"
 ```
 
 Since accessing set values by their label is common, the `set.label` syntax exists as shorthand:
 
-```coffee
+```coffeescript
 person.age
 
 # Desugared
@@ -261,7 +403,7 @@ person(age:)
 
 A block is represented by curly braces surrounding a body, where the last line of the block represents its returned type. The block creates a new child scope, so any labels defined inside the block are not accessible outside.
 
-```coffee
+```coffeescript
 let a = {
   let b = 1
   let c = 2
@@ -277,7 +419,7 @@ let a = {
 
 Functions are a mapping from one type binding to another, and are represented by an arrow `->`. Functions make any labelled input type labels available to reference in their output, like `let`.
 
-```coffee
+```coffeescript
 # Identity function
 x -> x
 
@@ -295,21 +437,21 @@ x :: Int -> {
 
 Functions only accept a single argument, but that argument can be a set of labelled values:
 
-```coffee
+```coffeescript
 # Add two numbers
 (a :: Int, b :: Int) -> a + b
 ```
 
 Return types can have labels:
 
-```coffee
+```coffeescript
 # Takes in any input and returns the same input labelled with a
 x -> a = x
 ```
 
 Both the input and the output are labelled type bindings:
 
-```coffee
+```coffeescript
 x -> x
 
 # Desugared
@@ -320,22 +462,20 @@ Note that the right-hand side represents the value position of a type binding.
 
 Since a function's input value can be a set, application can behave like "keyword arguments" in other languages:
 
-```coffee
+```coffeescript
 let greet = (name :: String, greeting :: String) -> {
   "#{greeting}, #{name}"
 }
 
 greet(greeting = "Hola", name = "Jacob")
-# => "Hola, Jacob"
+#=> "Hola, Jacob"
 ```
 
-More on application below.
-
-## Application
+### Function Application
 
 Function application is accomplished with parentheses:
 
-```coffee
+```coffeescript
 let double = x -> x * 2
 
 let four = double(2)
@@ -343,7 +483,7 @@ let four = double(2)
 
 Function application mirrors set selection by first finding a function in the set of values that would accept
 
-```coffee
+```coffeescript
 let double = (
   (x: Int)    -> x * 2
   (x: String) -> "${x}${x}"
@@ -352,3 +492,7 @@ let double = (
 let four = double(2)
 let hihi = double("hi")
 ```
+
+## Modules
+
+Modules provide a mechanism for 
