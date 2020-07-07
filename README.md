@@ -99,8 +99,8 @@ let :'b' = 456
 let :'c' = 789
 
 let :'hello' = :'a'
-print(hello)   #=> prints 123
-print(:hello)  #=> prints 123
+print(hello)    #=> prints 123
+print(:'hello') #=> prints 123
 ```
 
 Additionally, well-named labels can omit the quotes when using symbol syntax:
@@ -521,6 +521,8 @@ if a == b true else false
 
 if a == b {
   true
+elseif b < a {
+  123
 } else {
   false
 }
@@ -548,7 +550,7 @@ let dayType = (
 Modules provide a mechanism for organising and packaging functions and types. Modules can be imported by file path:
 
 ```coffeescript
-import strings from './strings.lang'
+import strings from './strings'
 
 let goodbye = strings.replace('hello', pattern = /hello/, replacement = 'goodbye')
 ```
